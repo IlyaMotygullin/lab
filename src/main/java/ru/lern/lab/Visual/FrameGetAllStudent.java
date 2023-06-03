@@ -23,36 +23,8 @@ public class FrameGetAllStudent {
         JList list = new JList(studentService.getAllStudent().toArray());
         frame.getContentPane().add(list);
         frame.getContentPane().add(new JScrollPane(list));
-        JButton button = new JButton("Назад");
-        MouseListener listener = new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                frame.dispose();
-                generalFrame.StartMenu();
-            }
 
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
-        };
-        button.addMouseListener(listener);
-        frame.getContentPane().add(BorderLayout.SOUTH,button);
+        frame.getContentPane().add(BorderLayout.SOUTH,FrameAddStudent.generateReverseButton(frame,generalFrame));
         frame.setVisible(true);
 
     }

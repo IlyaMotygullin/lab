@@ -10,6 +10,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class FrameAddStudent {
     private final StudentService studentService;
@@ -22,7 +25,6 @@ public class FrameAddStudent {
         StudentView student = new StudentView();
         JFrame jFrame = new JFrame();
         JButton button = new JButton("Добавить пользователя");
-        button.setSize(60,20);
         MouseListener listener = new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -55,20 +57,15 @@ public class FrameAddStudent {
         button.addMouseListener(listener);
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jFrame.setSize(800,600);
-        Container container = jFrame.getContentPane();
-        container.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+        List<JComponent> components = new ArrayList<>();
+        components.add(createPanelForAddStudent("Введите Фамилию Имя Отчество",student));
 
-        container.setLayout(new GridBagLayout());
-        GridBagConstraints constraints = new GridBagConstraints();
+        components.add(createPanelForAddStudent("Введите Группу",student));
 
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        constraints.weightx = 0.5;
-        constraints.gridy   = 0  ;
-        container.add(createPanelForAddStudent("Введите Фамилию Имя Отчество",student),constraints);
-        constraints.gridy = 1;
-        container.add(createPanelForAddStudent("Введите Группу",student),constraints);
-        constraints.gridy=5;
-        container.add(button,constraints);
+        components.add(button);
+
+       components.add(generateReverseButton(jFrame,generalFrame));
+       GeneralFrame.generateContainer(jFrame,components);
         jFrame.setVisible(true);
 
     }
@@ -94,5 +91,37 @@ public class FrameAddStudent {
         jPanel.add(label);
         jPanel.add(textField);
         return jPanel;
+    }
+    public static JButton generateReverseButton(JFrame frame,GeneralFrame generalFrame){
+        JButton button = new JButton("Назад");
+        MouseListener listener = new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                frame.dispose();
+                generalFrame.StartMenu();
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        };
+        button.addMouseListener(listener);
+        return button;
     }
 }

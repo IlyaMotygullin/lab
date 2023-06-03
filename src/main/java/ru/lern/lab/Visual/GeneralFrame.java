@@ -8,6 +8,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class GeneralFrame {
     private final FrameGetAllStudent frameGetAllStudent;
@@ -32,22 +35,28 @@ public class GeneralFrame {
         jFrame.setSize(800,480);
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        Container container = jFrame.getContentPane();
-        container.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-
-        container.setLayout(new GridBagLayout());
-        GridBagConstraints constraints = new GridBagConstraints();
-
-        constraints.fill = GridBagConstraints.VERTICAL;
-        constraints.weightx = 0.5;
-        constraints.gridy   = 0  ;
-        container.add(generateButtons("список всех студентов"),constraints);
-        constraints.gridy++;
-        container.add(generateButtons("добавить студента"),constraints);
-        constraints.gridy++;
-        container.add(generateButtons("Добавить достижение"),constraints);
-        constraints.gridy++;
-        container.add(generatePanel(jFrame),constraints);
+//        Container container = jFrame.getContentPane();
+//        container.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+//
+//        container.setLayout(new GridBagLayout());
+//        GridBagConstraints constraints = new GridBagConstraints();
+//
+//        constraints.fill = GridBagConstraints.VERTICAL;
+//        constraints.weightx = 0.5;
+//        constraints.gridy   = 0  ;
+//        container.add(generateButtons("список всех студентов"),constraints);
+//        constraints.gridy++;
+//        container.add(generateButtons("добавить студента"),constraints);
+//        constraints.gridy++;
+//        container.add(generateButtons("Добавить достижение"),constraints);
+//        constraints.gridy++;
+//        container.add(generatePanel(jFrame),constraints);
+        List<JComponent> components = new ArrayList<>();
+        components.add(generateButtons("список всех студентов"));
+        components.add(generateButtons("добавить студента"));
+        components.add(generateButtons("Добавить достижение"));
+        components.add(generatePanel(jFrame));
+        generateContainer(jFrame,components);
         jFrame.setVisible(true);
 
 
@@ -116,5 +125,21 @@ public class GeneralFrame {
         panel.add(label);
         panel.add(field);
         return panel;
+    }
+    public static Container generateContainer(JFrame frame, List<JComponent> list){
+        Container container = frame.getContentPane();
+        container.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+
+        container.setLayout(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
+
+        constraints.fill = GridBagConstraints.VERTICAL;
+        constraints.weightx = 0.5;
+        constraints.gridy   = 0  ;
+        for (JComponent component:list) {
+            container.add(component,constraints);
+            constraints.gridy++;
+        }
+        return container;
     }
 }

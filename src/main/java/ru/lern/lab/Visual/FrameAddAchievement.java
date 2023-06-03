@@ -10,37 +10,34 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class FrameAddAchievement {
     private final AchievementService achievementService;
 
-    public FrameAddAchievement(AchievementService achievementService) {
+
+    public FrameAddAchievement(AchievementService achievementService,
+                               FrameAddStudent frameAddStudent) {
         this.achievementService = achievementService;
+
     }
 
     public void addAchievement(GeneralFrame generalFrame){
         JFrame frame = new JFrame("Добавить достижение");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800,600);
-        Container container = frame.getContentPane();
-        container.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 
-        container.setLayout(new GridBagLayout());
-        GridBagConstraints constraints = new GridBagConstraints();
-
-        constraints.fill = GridBagConstraints.VERTICAL;
-        constraints.weightx = 0.5;
-        constraints.gridy   = 0  ;
         AchievementView achievementView = new AchievementView();
-        container.add(createPanelForAddStudent("Введите название достижения",achievementView),
-                constraints);
-        constraints.gridy = 1;
-        container.add(createPanelForAddStudent("Введите тип достижения",achievementView),constraints);
-        constraints.gridy=2;
-        container.add(createPanelForAddStudent("Введите айди студента",achievementView),
-                constraints);
-        constraints.gridy=5;
+        List<JComponent> components = new ArrayList<>();
+
+        components.add(createPanelForAddStudent("Введите название достижения",achievementView));
+
+        components.add(createPanelForAddStudent("Введите тип достижения",achievementView));
+
+        components.add(createPanelForAddStudent("Введите айди студента",achievementView));
+
         JButton button = new JButton("Добавить достижение");
         MouseListener listener = new MouseListener() {
             @Override
@@ -72,7 +69,10 @@ public class FrameAddAchievement {
             }
         };
         button.addMouseListener(listener);
-        container.add(button,constraints);
+        components.add(button);
+
+        components.add(FrameAddStudent.generateReverseButton(frame,generalFrame));
+        GeneralFrame.generateContainer(frame,components);
         frame.setVisible(true);
 
     }
