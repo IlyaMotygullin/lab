@@ -1,6 +1,7 @@
 package ru.lern.lab.Service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.lern.lab.Db.Entity.Student;
 import ru.lern.lab.Db.Repository.StudentRepository;
 import ru.lern.lab.Service.map.StudentMapper;
@@ -28,9 +29,12 @@ public class StudentService {
        student.setFio(name);
        studentRepository.save(student);
     }
+    @Transactional
     public StudentView getStudentById(Long id){
-       Student student= studentRepository.getReferenceById(id);
-       return studentMapper.mappedToView(student);
+
+
+
+       return studentMapper.mappedToView( studentRepository.getReferenceById(id));
     }
     public List<StudentView> getAllStudent(){
      return    studentRepository.findAll().stream().map(studentMapper::mappedToView)

@@ -32,8 +32,10 @@ public class StudentMapper {
         studentView.setId(student.getId());
         studentView.setFio(student.getFio());
         studentView.setGroup(student.getGroup());
-        studentView.setAchievements(student.getAchievements().stream()
-                .map(Achievement::getId).collect(Collectors.toList()));
+        if (student.getAchievements()!=null) {
+            studentView.setAchievements(student.getAchievements().stream()
+                    .map(Achievement::getId).collect(Collectors.toList()));
+        }
         return studentView;
     }
 }

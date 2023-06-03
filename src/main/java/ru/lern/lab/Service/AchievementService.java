@@ -23,6 +23,7 @@ public class AchievementService {
         this.achievementMapper = achievementMapper;
         this.studentRepository = studentRepository;
     }
+    @Transactional
     public AchievementView getAchievementById(Long id){
         return achievementMapper.mappedToView(achievementRepository.getReferenceById(id));
 

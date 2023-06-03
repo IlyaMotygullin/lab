@@ -16,7 +16,7 @@ public class Achievement {
     private String name;
     @Column(name = "type")
     private String type;
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "id_student")
     private Student idStudent;
 
